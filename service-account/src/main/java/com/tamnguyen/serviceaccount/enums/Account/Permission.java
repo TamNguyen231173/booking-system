@@ -1,9 +1,10 @@
-package com.tamnguyen.serviceaccount.model.Account;
+package com.tamnguyen.serviceaccount.enums.Account;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Getter
 public enum Permission {
 
   ADMIN_READ("admin:read"),
@@ -15,6 +16,5 @@ public enum Permission {
   USER_CREATE("user:create"),
   USER_DELETE("user:delete");
 
-  @Getter
   private final String permission;
 }

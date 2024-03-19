@@ -4,23 +4,20 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import com.tamnguyen.serviceaccount.enums.Account.Permission;
+
+import static com.tamnguyen.serviceaccount.enums.Account.Permission.*;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.tamnguyen.serviceaccount.model.Account.Permission.*;
-
 @RequiredArgsConstructor
 public enum Role {
 
   USER(Collections.emptySet()),
-  ADMIN(
-      Set.of(
-          ADMIN_READ,
-          ADMIN_UPDATE,
-          ADMIN_DELETE,
-          ADMIN_CREATE));
+  ADMIN(Set.of(ADMIN_READ, ADMIN_UPDATE, ADMIN_DELETE, ADMIN_CREATE));
 
   @Getter
   private final Set<Permission> permissions;

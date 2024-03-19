@@ -1,6 +1,14 @@
 package com.tamnguyen.serviceaccount.enums.Account;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Getter
 public enum AccountRole {
-  USER,
-  ADMIN
+  ADMIN("ADMIN"),
+  USER("USER");
+
+  private final String role;
+
 }

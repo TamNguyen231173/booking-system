@@ -12,9 +12,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -22,6 +24,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@EqualsAndHashCode(of = { "id" })
+@Table(name = "tokens")
 public class Token {
   @Id
   @GeneratedValue
@@ -39,6 +43,6 @@ public class Token {
   public boolean revoked;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "account", referencedColumnName = "id")
+  @JoinColumn(name = "account_id")
   public Account account;
 }

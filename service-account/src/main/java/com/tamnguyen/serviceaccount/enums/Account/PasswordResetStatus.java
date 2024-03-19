@@ -5,9 +5,10 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public enum AccountStatus {
-  ACTIVE("ACTIVE"),
-  INACTIVE("INACTIVE");
+public enum PasswordResetStatus {
+  PENDING("PENDING"),
+  COMPLETED("COMPLETED"),
+  EXPIRED("EXPIRED");
 
   private final String status;
 }

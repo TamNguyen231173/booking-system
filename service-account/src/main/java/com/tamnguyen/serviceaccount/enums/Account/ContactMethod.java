@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public enum AccountStatus {
-  ACTIVE("ACTIVE"),
-  INACTIVE("INACTIVE");
+public enum ContactMethod {
+  EMAIL("Email"),
+  PHONE("Phone");
 
-  private final String status;
+  private final String value;
 }

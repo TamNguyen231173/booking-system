@@ -1,10 +1,11 @@
 package com.tamnguyen.serviceaccount.model.Account;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,13 +19,12 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -33,6 +33,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "accounts")
+@EqualsAndHashCode(of = { "id" })
+
 public class Account implements UserDetails {
   @Id
   @GeneratedValue
@@ -50,9 +52,11 @@ public class Account implements UserDetails {
   @Enumerated(EnumType.STRING)
   private AccountStatus status = AccountStatus.ACTIVE;
 
-  @Column(name = "created_at")
+  @CreatedDate
+  @Column(name = "created_at", updatable = false)
   private LocalDateTime createdAt;
 
+  @LastModifiedDate
   @Column(name = "updated_at")
   private LocalDateTime updatedAt;
 
@@ -62,16 +66,8 @@ public class Account implements UserDetails {
   @OneToMany(mappedBy = "account")
   private List<Token> tokens;
 
-  @PrePersist
-  protected void onCreate() {
-    createdAt = LocalDateTime.now();
-    updatedAt = LocalDateTime.now();
-  }
-
-  @PreUpdate
-  protected void onUpdate() {
-    updatedAt = LocalDateTime.now();
-  }
+  @OneToOne(mappedBy = "account")
+  private Profile profile;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -80,25 +76,21 @@ public class Account implements UserDetails {
 
   @Override
   public boolean isAccountNonExpired() {
-    // Return true if the account is not expired.
     return true;
   }
 
   @Override
   public boolean isAccountNonLocked() {
-    // Return true if the account is not locked.
     return true;
   }
 
   @Override
   public boolean isCredentialsNonExpired() {
-    // Return true if the credentials are not expired.
     return true;
   }
 
   @Override
   public boolean isEnabled() {
-    // Return true if the account is enabled.
     return status == AccountStatus.ACTIVE;
   }
 }
