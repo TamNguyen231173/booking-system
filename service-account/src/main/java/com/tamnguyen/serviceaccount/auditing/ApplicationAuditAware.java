@@ -20,6 +20,7 @@ public class ApplicationAuditAware implements AuditorAware<Integer> {
     }
 
     Account AccountPrincipal = (Account) authentication.getPrincipal();
+
     return Optional.ofNullable(AccountPrincipal.getId()).map(Long::intValue);
   }
 }

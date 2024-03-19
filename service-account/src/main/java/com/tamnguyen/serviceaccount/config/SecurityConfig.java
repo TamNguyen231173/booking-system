@@ -1,4 +1,5 @@
-/*~~(Index 0 out of bounds for length 0)~~>*/package com.tamnguyen.serviceaccount.config;
+/*~~(Index 0 out of bounds for length 0)~~>*/
+package com.tamnguyen.serviceaccount.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -45,8 +46,8 @@ public class SecurityConfig {
   private final AuthenticationProvider authenticationProvider;
   private final LogoutHandler logoutHandler;
 
-    @Bean
-    SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+  @Bean
+  SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
     httpSecurity
         .csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(req -> req.requestMatchers(WHITE_LIST_URL)
@@ -65,6 +66,7 @@ public class SecurityConfig {
         .logout(logout -> logout.logoutUrl("/api/v1/auth/logout")
             .addLogoutHandler(logoutHandler)
             .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext()));
+
     return httpSecurity.build();
   }
 }

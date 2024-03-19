@@ -1,10 +1,7 @@
 package com.tamnguyen.serviceaccount.service;
 
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-
-import java.util.Optional;
-
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +13,6 @@ import com.tamnguyen.serviceaccount.model.Account.Account;
 import com.tamnguyen.serviceaccount.model.Token.Token;
 import com.tamnguyen.serviceaccount.repository.AccountRepository;
 import com.tamnguyen.serviceaccount.repository.TokenRepository;
-import com.tamnguyen.serviceaccount.repository.AccountRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +25,7 @@ public class AuthService {
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
 
+  @SuppressWarnings("null")
   public String register(RegisterRequest request) {
     var usernameExists = accountRepository.existsByUsername(request.getUsername());
     var emailExists = accountRepository.existsByEmail(request.getEmail());
@@ -54,7 +51,8 @@ public class AuthService {
     authenticationManager.authenticate(auth);
 
     var user = accountRepository.findByEmail(request.getEmail())
-        .orElseThrow();
+        .orElseThrow(() -> new RuntimeException("User not found"));
+
     var jwtToken = jwtService.generateToken(user);
     var refreshToken = jwtService.generateRefreshToken(user);
 
@@ -69,14 +67,17 @@ public class AuthService {
 
   private void revokeAllUserTokens(Account account) {
     var validUserTokens = tokenRepository.findAllValidTokenByUser(account.getId());
-    if (validUserTokens.isEmpty())
+
+    if (validUserTokens.isEmpty()) {
       return;
-    validUserTokens.forEach(token -> {
-      token.setExpired(true);
-    });
+    }
+
+    validUserTokens.forEach(token -> { token.setExpired(true); });
+
     tokenRepository.saveAll(validUserTokens);
   }
 
+  @SuppressWarnings("null")
   private void saveUserToken(Account account, String jwtToken) {
     var token = Token.builder()
         .account(account)

@@ -26,8 +26,21 @@ public class JwtService {
   @Value("${application.security.jwt.refresh-token.expiration}")
   private long refreshExpiration;
 
+  private boolean isTokenExpired(String token) {
+    return extractExpiration(token).before(new Date());
+  }
+
+  private Date extractExpiration(String token) {
+    return extractClaim(token, Claims::getExpiration);
+  }
+
+  public boolean isTokenValid(String token, UserDetails userDetails) {
+    final String username = extractUsername(token);
+    return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+  }
+
   public String extractUsername(String token) {
-    return extractClaim(token, Claims::getSubject);
+    return extractClaim(token, Claims::getSubject); // Claims::getSubject is equal to c -> c.getSubject()
   }
 
   public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -39,21 +52,15 @@ public class JwtService {
     return generateToken(new HashMap<>(), userDetails);
   }
 
-  public String generateToken(
-      Map<String, Object> extraClaims,
-      UserDetails userDetails) {
+  public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
     return buildToken(extraClaims, userDetails, jwtExpiration);
   }
 
-  public String generateRefreshToken(
-      UserDetails userDetails) {
+  public String generateRefreshToken(UserDetails userDetails) {
     return buildToken(new HashMap<>(), userDetails, refreshExpiration);
   }
 
-  private String buildToken(
-      Map<String, Object> extraClaims,
-      UserDetails userDetails,
-      long expiration) {
+  private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
     return Jwts
         .builder()
         .setClaims(extraClaims)
@@ -62,19 +69,6 @@ public class JwtService {
         .setExpiration(new Date(System.currentTimeMillis() + expiration))
         .signWith(getSignInKey(), SignatureAlgorithm.HS256)
         .compact();
-  }
-
-  public boolean isTokenValid(String token, UserDetails userDetails) {
-    final String username = extractUsername(token);
-    return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
-  }
-
-  private boolean isTokenExpired(String token) {
-    return extractExpiration(token).before(new Date());
-  }
-
-  private Date extractExpiration(String token) {
-    return extractClaim(token, Claims::getExpiration);
   }
 
   private Claims extractAllClaims(String token) {
