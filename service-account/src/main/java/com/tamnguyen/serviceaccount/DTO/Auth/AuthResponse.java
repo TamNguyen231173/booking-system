@@ -1,7 +1,7 @@
-package com.tamnguyen.serviceaccount.controller.Auth;
+package com.tamnguyen.serviceaccount.DTO.Auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tamnguyen.serviceaccount.model.Account.Account;
+import com.tamnguyen.serviceaccount.DTO.Account.ResponseAccount;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthResponse {
   @JsonProperty("account")
-  private Account account;
+  private ResponseAccount account;
 
   @JsonProperty("access_token")
   private String accessToken;

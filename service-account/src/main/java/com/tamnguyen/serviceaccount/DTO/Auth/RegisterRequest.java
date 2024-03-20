@@ -1,6 +1,4 @@
-package com.tamnguyen.serviceaccount.controller.Auth;
-
-import com.tamnguyen.serviceaccount.model.Account.Role;
+package com.tamnguyen.serviceaccount.DTO.Auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,5 +13,4 @@ public class RegisterRequest {
   private String username;
   private String email;
   private String password;
-  private Role role;
 }

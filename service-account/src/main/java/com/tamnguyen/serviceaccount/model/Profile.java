@@ -1,11 +1,11 @@
-package com.tamnguyen.serviceaccount.model.Account;
+package com.tamnguyen.serviceaccount.model;
 
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import com.tamnguyen.serviceaccount.enums.Account.ContactMethod;
+import com.tamnguyen.serviceaccount.enums.ContactMethod;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,6 +16,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -62,11 +64,19 @@ public class Profile {
   @Column(name = "preferred_contact_method", nullable = false)
   private ContactMethod preferredContactMethod = ContactMethod.EMAIL;
 
-  @CreatedDate
   @Column(name = "created_at", updatable = false)
   private LocalDateTime createdAt;
 
-  @LastModifiedDate
   @Column(name = "updated_at")
   private LocalDateTime updatedAt;
+
+  @PrePersist
+  protected void onCreate() {
+    this.createdAt = LocalDateTime.now();
+  }
+
+  @PreUpdate
+  protected void onUpdate() {
+    this.updatedAt = LocalDateTime.now();
+  }
 }

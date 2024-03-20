@@ -1,16 +1,19 @@
 package com.tamnguyen.serviceaccount.service;
 
+import static com.tamnguyen.serviceaccount.enums.Role.USER;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.tamnguyen.serviceaccount.controller.Auth.AuthRequest;
-import com.tamnguyen.serviceaccount.controller.Auth.AuthResponse;
-import com.tamnguyen.serviceaccount.controller.Auth.RegisterRequest;
-import com.tamnguyen.serviceaccount.enums.Token.TokenType;
-import com.tamnguyen.serviceaccount.model.Account.Account;
-import com.tamnguyen.serviceaccount.model.Token.Token;
+import com.tamnguyen.serviceaccount.DTO.Account.ResponseAccount;
+import com.tamnguyen.serviceaccount.DTO.Auth.AuthRequest;
+import com.tamnguyen.serviceaccount.DTO.Auth.AuthResponse;
+import com.tamnguyen.serviceaccount.DTO.Auth.RegisterRequest;
+import com.tamnguyen.serviceaccount.enums.TokenType;
+import com.tamnguyen.serviceaccount.model.Account;
+import com.tamnguyen.serviceaccount.model.Token;
 import com.tamnguyen.serviceaccount.repository.AccountRepository;
 import com.tamnguyen.serviceaccount.repository.TokenRepository;
 
@@ -26,44 +29,80 @@ public class AuthService {
   private final AuthenticationManager authenticationManager;
 
   @SuppressWarnings("null")
-  public String register(RegisterRequest request) {
+  public ResponseAccount register(RegisterRequest request) {
     var usernameExists = accountRepository.existsByUsername(request.getUsername());
     var emailExists = accountRepository.existsByEmail(request.getEmail());
 
     if (usernameExists || emailExists) {
-      return "Username or email already exists";
+      throw new RuntimeException("Username or email already exists");
     }
 
     var account = Account.builder()
         .username(request.getUsername())
         .email(request.getEmail())
         .password(passwordEncoder.encode(request.getPassword()))
-        .role(request.getRole())
+        .role(USER)
         .build();
-
+      
     accountRepository.save(account);
 
-    return "Account created successfully";
+    return ResponseAccount.fromAccount(account);
   }
 
   public AuthResponse login(AuthRequest request) {
     var auth = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
     authenticationManager.authenticate(auth);
 
-    var user = accountRepository.findByEmail(request.getEmail())
+    var acc = accountRepository.findByEmail(request.getEmail())
         .orElseThrow(() -> new RuntimeException("User not found"));
 
-    var jwtToken = jwtService.generateToken(user);
-    var refreshToken = jwtService.generateRefreshToken(user);
+    var jwtToken = jwtService.generateToken(acc);
+    var refreshToken = jwtService.generateRefreshToken(acc);
+    
+    saveUserToken(acc, jwtToken);
 
-    revokeAllUserTokens(user);
+    revokeAllUserTokens(acc);
 
-    saveUserToken(user, jwtToken);
     return AuthResponse.builder()
+        .account(ResponseAccount.fromAccount(acc))
         .accessToken(jwtToken)
         .refreshToken(refreshToken)
         .build();
   }
+
+  public String logout(String refreshToken) {
+    var token = tokenRepository.findByToken(refreshToken)
+        .orElseThrow(() -> new RuntimeException("Invalid refresh token"));
+
+    token.setExpired(true);
+    token.setRevoked(true);
+    tokenRepository.save(token);
+
+    return "Logout successfully";
+  }
+
+  public String refreshToken(String refreshToken) {
+    var token = tokenRepository.findByToken(refreshToken)
+        .orElseThrow(() -> new RuntimeException("Invalid refresh token"));
+
+    if (token.isExpired()) {
+      return "Refresh token is expired";
+    }
+
+    var account = token.getAccount();
+    var jwtToken = jwtService.generateToken(account);
+
+    revokeAllUserTokens(account);
+    saveUserToken(account, jwtToken);
+
+    return jwtToken;
+  }
+
+  // public String forgotPassword(String email) {
+  //   var account = accountRepository.findByEmail(email)
+  //       .orElseThrow(() -> new RuntimeException("User not found"));
+  //   return "Reset password link sent to your email";
+  // }
 
   private void revokeAllUserTokens(Account account) {
     var validUserTokens = tokenRepository.findAllValidTokenByUser(account.getId());
@@ -72,7 +111,9 @@ public class AuthService {
       return;
     }
 
-    validUserTokens.forEach(token -> { token.setExpired(true); });
+    validUserTokens.forEach(token -> {
+      token.setExpired(true);
+    });
 
     tokenRepository.saveAll(validUserTokens);
   }

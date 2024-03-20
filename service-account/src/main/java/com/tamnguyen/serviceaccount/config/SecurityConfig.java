@@ -16,12 +16,13 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Configuration;
+
+import static com.tamnguyen.serviceaccount.enums.Permission.*;
+import static com.tamnguyen.serviceaccount.enums.Role.ADMIN;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpMethod.PUT;
-import static com.tamnguyen.serviceaccount.enums.Account.Permission.*;
-import static com.tamnguyen.serviceaccount.model.Account.Role.ADMIN;
 
 @EnableWebSecurity
 @RequiredArgsConstructor

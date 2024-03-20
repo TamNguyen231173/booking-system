@@ -1,4 +1,4 @@
-package com.tamnguyen.serviceaccount.controller.Auth;
+package com.tamnguyen.serviceaccount.DTO.Account;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class AuthRequest {
-  private String email;
-  private String password;
+@AllArgsConstructor
+public class UpdateAccountRequest {
+  private String username;
 }

@@ -1,7 +1,6 @@
-package com.tamnguyen.serviceaccount.model.Token;
+package com.tamnguyen.serviceaccount.model;
 
-import com.tamnguyen.serviceaccount.enums.Token.TokenType;
-import com.tamnguyen.serviceaccount.model.Account.Account;
+import com.tamnguyen.serviceaccount.enums.TokenType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

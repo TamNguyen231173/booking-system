@@ -1,4 +1,4 @@
-package com.tamnguyen.serviceaccount.model.Account;
+package com.tamnguyen.serviceaccount.model;
 
 import java.time.LocalDateTime;
 
@@ -41,7 +41,6 @@ public class LoginAttempt {
   @Column(name = "ip_address", nullable = false)
   private String ipAddress;
 
-  @CreatedDate
   @Column(name = "time", nullable = false, updatable = false)
   private LocalDateTime time;
 

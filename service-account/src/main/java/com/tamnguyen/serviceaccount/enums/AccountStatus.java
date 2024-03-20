@@ -1,4 +1,4 @@
-package com.tamnguyen.serviceaccount.enums.Account;
+package com.tamnguyen.serviceaccount.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

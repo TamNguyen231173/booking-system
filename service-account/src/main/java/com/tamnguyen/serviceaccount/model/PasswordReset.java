@@ -1,10 +1,11 @@
-package com.tamnguyen.serviceaccount.model.Account;
+package com.tamnguyen.serviceaccount.model;
 
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.security.access.method.P;
 
-import com.tamnguyen.serviceaccount.enums.Account.PasswordResetStatus;
+import com.tamnguyen.serviceaccount.enums.PasswordResetStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,6 +17,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,7 +49,11 @@ public class PasswordReset {
   @Column(name = "status", nullable = false)
   private PasswordResetStatus status = PasswordResetStatus.PENDING;
 
-  @CreatedDate
   @Column(name = "request_time", nullable = false, updatable = false)
   private LocalDateTime requestTime;
+
+  @PrePersist
+  protected void onCreate() {
+    this.requestTime = LocalDateTime.now();
+  }
 }

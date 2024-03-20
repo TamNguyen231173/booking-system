@@ -1,12 +1,10 @@
-package com.tamnguyen.serviceaccount.model.Account;
+package com.tamnguyen.serviceaccount.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import com.tamnguyen.serviceaccount.enums.Account.Permission;
-
-import static com.tamnguyen.serviceaccount.enums.Account.Permission.*;
+import static com.tamnguyen.serviceaccount.enums.Permission.*;
 
 import java.util.Collections;
 import java.util.List;
