@@ -59,9 +59,9 @@ public class AuthService {
     var jwtToken = jwtService.generateToken(acc);
     var refreshToken = jwtService.generateRefreshToken(acc);
     
-    saveUserToken(acc, jwtToken);
-
     revokeAllUserTokens(acc);
+
+    saveUserToken(acc, refreshToken);
 
     return AuthResponse.builder()
         .account(ResponseAccount.fromAccount(acc))
@@ -81,22 +81,30 @@ public class AuthService {
     return "Logout successfully";
   }
 
-  public String refreshToken(String refreshToken) {
+  public AuthResponse refreshToken(String refreshToken) {
     var token = tokenRepository.findByToken(refreshToken)
         .orElseThrow(() -> new RuntimeException("Invalid refresh token"));
 
     if (token.isExpired()) {
-      return "Refresh token is expired";
+      return null;
     }
 
     var account = token.getAccount();
     var jwtToken = jwtService.generateToken(account);
+    var newRefreshToken = jwtService.generateRefreshToken(account); // added semicolon here
 
     revokeAllUserTokens(account);
-    saveUserToken(account, jwtToken);
+    
+    saveUserToken(account, newRefreshToken);
 
-    return jwtToken;
-  }
+    System.out.println("test=====" + jwtToken);
+
+    return AuthResponse.builder()
+        .account(ResponseAccount.fromAccount(account))
+        .accessToken(jwtToken)
+        .refreshToken(newRefreshToken)
+        .build();
+}
 
   // public String forgotPassword(String email) {
   //   var account = accountRepository.findByEmail(email)

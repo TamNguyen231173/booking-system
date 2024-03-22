@@ -6,7 +6,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +16,6 @@ import com.tamnguyen.serviceaccount.DTO.Account.UpdateAccountRequest;
 import com.tamnguyen.serviceaccount.model.Account;
 import com.tamnguyen.serviceaccount.service.AccountService;
 
-import io.micrometer.core.ipc.http.HttpSender.Response;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -36,10 +34,6 @@ public class AccountController {
         ResponseAccount account = getAuthenticatedAccount();
 
         var data = accountService.getAccountById(account.getId());
-
-        if (data.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         
         return ResponseEntity.ok(
             ResponseSuccess.builder()

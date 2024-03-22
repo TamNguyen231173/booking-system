@@ -67,11 +67,12 @@ public class AccountService {
         return account;
     }
 
-    public Optional<Account> getAccountById(Long id) {
+    public ResponseAccount getAccountById(Long id) {
       if (id == null) {
         throw new IllegalArgumentException("Id must not be null");
       }
 
-      return accountRepository.findByIdAndStatus(id, AccountStatus.ACTIVE);
+      var account = accountRepository.findByIdAndStatus(id, AccountStatus.ACTIVE);
+      return ResponseAccount.fromAccount(account);
     }
 }

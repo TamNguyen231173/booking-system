@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tamnguyen.serviceaccount.DTO.Auth.AuthRequest;
 import com.tamnguyen.serviceaccount.DTO.Auth.AuthResponse;
+import com.tamnguyen.serviceaccount.DTO.Auth.RefreshTokenDTO;
 import com.tamnguyen.serviceaccount.DTO.Auth.RegisterRequest;
 import com.tamnguyen.serviceaccount.DTO.ResponseSuccess;
 import com.tamnguyen.serviceaccount.service.AuthService;
@@ -46,5 +47,10 @@ public class AuthController {
       .status("success")
       .message("User logged out successfully")
       .build());
+  }
+
+  @PostMapping("/refresh")
+  public ResponseEntity<AuthResponse> refresh(@RequestBody RefreshTokenDTO refreshTokenDTO) {
+    return ResponseEntity.ok(authService.refreshToken(refreshTokenDTO.getToken()));
   }
 }
