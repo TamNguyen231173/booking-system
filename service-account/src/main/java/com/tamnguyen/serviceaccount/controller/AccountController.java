@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tamnguyen.serviceaccount.DTO.ResponseSuccess;
 import com.tamnguyen.serviceaccount.DTO.Account.ResponseAccount;
 import com.tamnguyen.serviceaccount.DTO.Account.UpdateAccountRequest;
+import com.tamnguyen.serviceaccount.DTO.Account.UpdateProfile;
 import com.tamnguyen.serviceaccount.model.Account;
+import com.tamnguyen.serviceaccount.model.Profile;
 import com.tamnguyen.serviceaccount.service.AccountService;
+import com.tamnguyen.serviceaccount.service.ProfileService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,15 +26,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
+    private final ProfileService profileService;
 
-    private ResponseAccount getAuthenticatedAccount() {
+    private Account getAuthenticatedAccount() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return ResponseAccount.fromAccount((Account) auth.getPrincipal());
+        return (Account) auth.getPrincipal();
     }
 
     @GetMapping("/")
     public ResponseEntity<ResponseSuccess> getAccount() {
-        ResponseAccount account = getAuthenticatedAccount();
+        Account account = getAuthenticatedAccount();
 
         var data = accountService.getAccountById(account.getId());
         
@@ -46,7 +50,7 @@ public class AccountController {
     @PatchMapping("/")
     public ResponseEntity<ResponseSuccess> updateAccount(@RequestBody UpdateAccountRequest body) {
         try {
-            ResponseAccount account = getAuthenticatedAccount();
+            Account account = getAuthenticatedAccount();
             var data = accountService.updateAccount(account.getId(), body);
             
             return ResponseEntity.ok(
@@ -63,7 +67,7 @@ public class AccountController {
     @DeleteMapping("/")
     public ResponseEntity<ResponseSuccess> deleteAccount() {
         try {
-            ResponseAccount account = getAuthenticatedAccount();
+            Account account = getAuthenticatedAccount();
             accountService.deactivateAccount(account.getId());
             
             return ResponseEntity.ok(
@@ -74,5 +78,18 @@ public class AccountController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PatchMapping("/update-profile")
+    public ResponseEntity<ResponseSuccess> updateProfile(@RequestBody UpdateProfile request) {
+        Account account = getAuthenticatedAccount();
+        Profile profile = profileService.findOneAndUpdate(account, request);
+
+        return ResponseEntity.ok(
+            ResponseSuccess.builder()
+            .status("success")
+            .message("Updated profile")
+            .data(profile)
+            .build());
     }
 }

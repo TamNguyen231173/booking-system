@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class AccountService {
     private final AccountRepository accountRepository;
 
+    @SuppressWarnings("null")
     public Account createAccount(Account account) {
         if (account == null) {
             throw new IllegalArgumentException("Account must not be null");
@@ -28,6 +29,7 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
+    @SuppressWarnings("null")
     public ResponseAccount updateAccount(Long id, UpdateAccountRequest body) {
         if (id == null || body == null) {
             throw new IllegalArgumentException("Account id and account must not be null");
@@ -68,11 +70,11 @@ public class AccountService {
     }
 
     public ResponseAccount getAccountById(Long id) {
-      if (id == null) {
-        throw new IllegalArgumentException("Id must not be null");
-      }
+        if (id == null) {
+            throw new IllegalArgumentException("Id must not be null");
+        }
 
-      var account = accountRepository.findByIdAndStatus(id, AccountStatus.ACTIVE);
-      return ResponseAccount.fromAccount(account);
+        var account = accountRepository.findByIdAndStatus(id, AccountStatus.ACTIVE);
+        return ResponseAccount.fromAccount(account);
     }
 }
