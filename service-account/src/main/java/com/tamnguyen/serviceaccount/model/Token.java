@@ -1,5 +1,7 @@
 package com.tamnguyen.serviceaccount.model;
 
+import java.sql.Date;
+
 import com.tamnguyen.serviceaccount.enums.TokenType;
 
 import jakarta.persistence.Column;
@@ -33,9 +35,11 @@ public class Token {
   @Column(unique = true)
   public String token;
 
-  @Builder.Default
   @Enumerated(EnumType.STRING)
-  public TokenType type = TokenType.REFRESH_TOKEN;
+  public TokenType type;
+
+  @Column(name = "expiry_date", nullable = true)
+  public Long expiryDate;
 
   public boolean expired;
 

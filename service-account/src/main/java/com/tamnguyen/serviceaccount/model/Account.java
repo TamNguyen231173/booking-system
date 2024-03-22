@@ -59,6 +59,10 @@ public class Account implements UserDetails {
   @Enumerated(EnumType.STRING)
   private Role role;
 
+  @Builder.Default
+  @Column(name = "verify", nullable = false)
+  private boolean verify = false;
+
   // @OneToMany(mappedBy = "account")
   // private List<Token> tokens;
 

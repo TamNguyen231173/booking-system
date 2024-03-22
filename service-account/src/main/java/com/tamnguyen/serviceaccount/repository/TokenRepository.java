@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.tamnguyen.serviceaccount.model.Token;
+import com.tamnguyen.serviceaccount.enums.TokenType;
+
 
 public interface TokenRepository extends JpaRepository<Token, Long> {
 
@@ -18,6 +20,8 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
   List<Token> findAllValidTokenByUser(Long id);
 
   Optional<Token> findByToken(String token);
+
+  Optional<Token> findByTokenAndType(String token, TokenType type);
 
   Token findByAccountId(Long accountId);
 
