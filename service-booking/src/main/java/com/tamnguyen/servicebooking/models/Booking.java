@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.tamnguyen.servicebooking.enums.BookingStatus;
 import com.tamnguyen.servicebooking.validators.CheckDates;
 
 import jakarta.validation.constraints.NotNull;
@@ -26,7 +27,7 @@ public class Booking {
   @Id
   private String id;
 
-  @NotNull
+  @CreatedDate
   private LocalDateTime bookingDate;
 
   @NotNull
@@ -41,10 +42,9 @@ public class Booking {
   @LastModifiedDate
   private LocalDateTime updatedDate;
 
-  @NotNull
-  private String status;
+  @Builder.Default
+  private BookingStatus status = BookingStatus.SCHEDULED;
 
   @Builder.Default
-  @NotNull
   private Boolean isDeleted = false;
 }

@@ -8,6 +8,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.tamnguyen.servicebooking.enums.LegStatus;
 import com.tamnguyen.servicebooking.validators.CheckDates;
 
 import jakarta.validation.constraints.NotNull;
@@ -41,8 +42,8 @@ public class Leg {
   @NotNull
   private LocalDateTime arrivalTime;
 
-  @NotNull
-  private String status;
+  @Builder.Default
+  private LegStatus status = LegStatus.SCHEDULED;
 
   @CreatedDate
   private LocalDateTime createdDate;

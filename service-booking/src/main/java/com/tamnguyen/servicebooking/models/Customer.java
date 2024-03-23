@@ -40,6 +40,5 @@ public class Customer {
   private String address;
 
   @Builder.Default
-  @NotNull
   private Boolean isDeleted = false;
 }

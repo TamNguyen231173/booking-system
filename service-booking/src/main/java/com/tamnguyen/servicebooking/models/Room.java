@@ -4,6 +4,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import com.tamnguyen.servicebooking.enums.RoomStatus;
+import com.tamnguyen.servicebooking.enums.RoomType;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +26,7 @@ public class Room {
   private String name;
 
   @NotNull
-  private String type;
+  private RoomType type;
 
   @NotNull
   private Double pricePerNight;
@@ -34,13 +37,12 @@ public class Room {
   @NotNull
   private Integer maxGuests;
 
-  @NotNull
-  private String status;
+  @Builder.Default
+  private RoomStatus status = RoomStatus.AVAILABLE;
 
   @DBRef
   private Vender vender;
 
   @Builder.Default
-  @NotNull
   private Boolean isDeleted = false;
 }

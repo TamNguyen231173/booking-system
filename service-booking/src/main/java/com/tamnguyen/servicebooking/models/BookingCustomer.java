@@ -32,6 +32,5 @@ public class BookingCustomer {
   private Customer customer;
 
   @Builder.Default
-  @NotNull
   private Boolean isDeleted = false;
 }

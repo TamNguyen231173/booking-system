@@ -32,6 +32,5 @@ public class BookingFlight {
   private Flight flight;
 
   @Builder.Default
-  @NotNull
   private Boolean isDeleted = false;
 }

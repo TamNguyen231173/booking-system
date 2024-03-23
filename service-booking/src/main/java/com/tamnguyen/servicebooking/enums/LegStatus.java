@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum LegStatus {
   SCHEDULED("SCHEDULED"),
+  PENDING("PENDING"),
   DEPARTED("DEPARTED"),
-  IN_FLIGHT("IN_FLIGHT"),
   ARRIVED("ARRIVED"),
   CANCELLED("CANCELLED");
 

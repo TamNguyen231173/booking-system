@@ -3,6 +3,8 @@ package com.tamnguyen.servicebooking.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import com.tamnguyen.servicebooking.enums.PaymentStatus;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,6 +34,8 @@ public class Payment {
   private String paymentMethod;
 
   @Builder.Default
-  @NotNull
+  private PaymentStatus status = PaymentStatus.PENDING;
+
+  @Builder.Default
   private Boolean isDeleted = false;
 }

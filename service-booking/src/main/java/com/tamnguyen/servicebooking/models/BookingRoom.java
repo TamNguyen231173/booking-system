@@ -32,6 +32,5 @@ public class BookingRoom {
   private Room room;
 
   @Builder.Default
-  @NotNull
   private Boolean isDeleted = false;
 }

@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum PaymentsStatus {
+public enum PaymentStatus {
   PENDING("PENDING"),
   COMPLETED("COMPLETED"),
   FAILED("FAILED"),

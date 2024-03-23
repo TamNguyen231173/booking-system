@@ -36,6 +36,5 @@ public class Vender {
   private String service;
 
   @Builder.Default
-  @NotNull
   private Boolean isDeleted = false;
 }

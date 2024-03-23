@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.tamnguyen.servicebooking.enums.FlightStatus;
 import com.tamnguyen.servicebooking.validators.CheckDates;
 
 import jakarta.validation.constraints.NotNull;
@@ -54,8 +55,8 @@ public class Flight {
   @NotNull
   private int availableSeats;
 
-  @NotNull
-  private String status;
+  @Builder.Default
+  private FlightStatus status = FlightStatus.SCHEDULED;
 
   @DBRef
   private Vender vender;
@@ -67,6 +68,5 @@ public class Flight {
   private LocalDateTime updatedDate;
 
   @Builder.Default
-  @NotNull
   private Boolean isDeleted = false;
 }

@@ -33,4 +33,7 @@ public class Currency {
 
   @NotNull
   private BigDecimal exchangeRate;
+
+  @Builder.Default
+  private Boolean isDeleted = false;
 }
