@@ -43,7 +43,7 @@ public class ServiceAccountApplication {
 	CommandLineRunner commandLineRunner() {
 	  return args -> {
 			var admin = accountService.getAccountByName(adminUsername);
-			if (admin == null) {
+			if (admin.isEmpty()) {
 					var account = Account.builder()
 									.username(adminUsername)
 									.email(adminEmail)
