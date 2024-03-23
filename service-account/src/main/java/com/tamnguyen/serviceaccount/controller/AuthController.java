@@ -1,12 +1,13 @@
 package com.tamnguyen.serviceaccount.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tamnguyen.serviceaccount.DTO.ResponseSuccess;
 import com.tamnguyen.serviceaccount.DTO.Auth.AuthRequest;
 import com.tamnguyen.serviceaccount.DTO.Auth.AuthResponse;
 import com.tamnguyen.serviceaccount.DTO.Auth.EmailRequest;
@@ -14,8 +15,6 @@ import com.tamnguyen.serviceaccount.DTO.Auth.RefreshTokenDTO;
 import com.tamnguyen.serviceaccount.DTO.Auth.RegisterRequest;
 import com.tamnguyen.serviceaccount.DTO.Auth.ResetPasswordRequest;
 import com.tamnguyen.serviceaccount.DTO.Auth.TokenRequest;
-import com.tamnguyen.serviceaccount.model.PasswordReset;
-import com.tamnguyen.serviceaccount.DTO.ResponseSuccess;
 import com.tamnguyen.serviceaccount.service.AuthService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;

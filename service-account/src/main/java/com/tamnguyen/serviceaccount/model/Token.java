@@ -1,7 +1,5 @@
 package com.tamnguyen.serviceaccount.model;
 
-import java.sql.Date;
-
 import com.tamnguyen.serviceaccount.enums.TokenType;
 
 import jakarta.persistence.Column;

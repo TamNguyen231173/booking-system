@@ -2,9 +2,6 @@ package com.tamnguyen.serviceaccount.model;
 
 import java.time.LocalDateTime;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.security.access.method.P;
-
 import com.tamnguyen.serviceaccount.enums.PasswordResetStatus;
 
 import jakarta.persistence.Column;

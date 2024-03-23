@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import com.tamnguyen.serviceaccount.model.Account;
 
 public class ApplicationAuditAware implements AuditorAware<Integer> {
+  @SuppressWarnings("null")
   @Override
   public Optional<Integer> getCurrentAuditor() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

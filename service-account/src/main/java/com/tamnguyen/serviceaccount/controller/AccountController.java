@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tamnguyen.serviceaccount.DTO.ResponseSuccess;
-import com.tamnguyen.serviceaccount.DTO.Account.ResponseAccount;
 import com.tamnguyen.serviceaccount.DTO.Account.UpdateAccountRequest;
 import com.tamnguyen.serviceaccount.DTO.Account.UpdateProfile;
 import com.tamnguyen.serviceaccount.model.Account;

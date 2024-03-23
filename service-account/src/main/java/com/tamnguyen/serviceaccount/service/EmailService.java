@@ -19,6 +19,7 @@ public class EmailService implements EmailRepository {
  
   @Value("${mail.from}") private String sender;
    
+  @SuppressWarnings("null")
   public boolean sendEmail(EmailDetails emailDetails) {
       try {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
