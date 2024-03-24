@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 public enum Role {
 
   USER(Collections.emptySet()),
+  MANAGER(Set.of(MANAGER_READ, MANAGER_UPDATE, MANAGER_DELETE, MANAGER_CREATE)),
   ADMIN(Set.of(ADMIN_READ, ADMIN_UPDATE, ADMIN_DELETE, ADMIN_CREATE));
 
   @Getter

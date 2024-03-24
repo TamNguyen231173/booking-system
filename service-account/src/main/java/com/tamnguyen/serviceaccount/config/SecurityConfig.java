@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
 
 import static com.tamnguyen.serviceaccount.enums.Permission.*;
 import static com.tamnguyen.serviceaccount.enums.Role.ADMIN;
+import static com.tamnguyen.serviceaccount.enums.Role.MANAGER;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
@@ -53,12 +54,11 @@ public class SecurityConfig {
         .csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(req -> req.requestMatchers(WHITE_LIST_URL)
             .permitAll()
-            .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name())
-            .requestMatchers(GET, "/api/v1/management/**").hasAnyAuthority(ADMIN_READ.name())
-            .requestMatchers(POST, "/api/v1/management/**").hasAnyAuthority(ADMIN_CREATE.name())
-            .requestMatchers(PUT, "/api/v1/management/**").hasAnyAuthority(ADMIN_UPDATE.name())
-            .requestMatchers(DELETE, "/api/v1/management/**")
-            .hasAnyAuthority(ADMIN_DELETE.name())
+            .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name(), MANAGER.name())
+            .requestMatchers(GET, "/api/v1/management/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
+            .requestMatchers(POST, "/api/v1/management/**").hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_CREATE.name())
+            .requestMatchers(PUT, "/api/v1/management/**").hasAnyAuthority(ADMIN_UPDATE.name(),  MANAGER_UPDATE.name())
+            .requestMatchers(DELETE, "/api/v1/management/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
             .anyRequest()
             .authenticated())
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
