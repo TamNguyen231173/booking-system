@@ -1,5 +1,7 @@
 package com.tamnguyen.servicebooking.services;
 
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BookingService {
   private final BookingRepository bookingRepository;
+
+  public List<Booking> getBookings() {
+    return bookingRepository.findAll();
+  }
   
   public Booking getBooking(String bookingId) {
     return bookingRepository.findById(bookingId)

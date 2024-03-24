@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.tamnguyen.servicebooking.enums.ServiceType;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -35,7 +37,7 @@ public class Vender {
   private String address;
 
   @NotNull
-  private String service;
+  private ServiceType service;
 
   @Builder.Default
   private Boolean isDeleted = false;
