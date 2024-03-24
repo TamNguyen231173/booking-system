@@ -1,4 +1,4 @@
-package com.tamnguyen.serviceaccount.config;
+package com.tamnguyen.servicebooking.configs;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
@@ -17,11 +17,11 @@ import io.swagger.v3.oas.annotations.servers.Server;
                         email = "contact@tamnguyen.com",
                         url = "https://github.com/tamnguyen231173"
                 ),
-                description = "OpenApi documentation for Account Service API",
+                description = "OpenApi documentation for Booking Service API",
                 title = "OpenApi specification - Tam Nguyen",
                 version = "1.0",
                 license = @License(
-                        name = "Licence name",
+                        name = "License name",
                         url = "https://some-url.com"
                 ),
                 termsOfService = "Terms of service"
@@ -29,7 +29,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
         servers = {
                 @Server(
                         description = "Local ENV",
-                        url = "http://localhost:8081"
+                        url = "http://localhost:8082"
                 )
         },
         security = {
