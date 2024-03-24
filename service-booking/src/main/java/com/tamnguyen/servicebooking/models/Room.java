@@ -3,6 +3,7 @@ package com.tamnguyen.servicebooking.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.tamnguyen.servicebooking.enums.RoomStatus;
 import com.tamnguyen.servicebooking.enums.RoomType;
@@ -17,12 +18,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Document(collection = "rooms")
 public class Room {
   @Id
   private String id;
 
   @NotNull
-  @Indexed(unique = true)
   private String name;
 
   @NotNull
@@ -40,6 +41,7 @@ public class Room {
   @Builder.Default
   private RoomStatus status = RoomStatus.AVAILABLE;
 
+  @NotNull
   @DBRef
   private Vender vender;
 

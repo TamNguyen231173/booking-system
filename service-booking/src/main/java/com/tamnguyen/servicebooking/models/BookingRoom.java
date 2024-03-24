@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "BookingRooms")
+@Document(collection = "booking-rooms")
 public class BookingRoom {
 
   @Id
@@ -31,6 +31,6 @@ public class BookingRoom {
   @DBRef
   private Room room;
 
-  @Builder.Default
-  private Boolean isDeleted = false;
+  @NotNull
+  private Double totalPrice;
 }

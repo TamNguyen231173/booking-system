@@ -1,4 +1,4 @@
-package com.tamnguyen.servicebooking.DTOs;
+package com.tamnguyen.servicebooking.DTOs.Bookings;
 
 import java.time.LocalDateTime;
 

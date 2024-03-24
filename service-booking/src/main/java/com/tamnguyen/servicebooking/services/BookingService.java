@@ -3,7 +3,7 @@ package com.tamnguyen.servicebooking.services;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import com.tamnguyen.servicebooking.DTOs.UpdateBooking;
+import com.tamnguyen.servicebooking.DTOs.Bookings.UpdateBooking;
 import com.tamnguyen.servicebooking.models.Booking;
 import com.tamnguyen.servicebooking.repositories.BookingRepository;
 
@@ -20,26 +20,22 @@ public class BookingService {
   }
 
   public Booking updateBooking(String bookingId,UpdateBooking body) {
-    var bookingUpdated =  bookingRepository.findById(bookingId)
-    .map(booking -> {
-        BeanUtils.copyProperties(body, booking, "id", "createdDate", "updatedDate", "isDeleted");
-        return bookingRepository.save(booking);
-    })
-    .orElseThrow(() -> new RuntimeException("Booking not found"));
+    Booking booking =  bookingRepository.findById(bookingId)
+      .orElseThrow(() -> new RuntimeException("Booking not found"));
+  
+    BeanUtils.copyProperties(body, booking, "id", "createdDate", "updatedDate", "isDeleted");
 
-    return bookingUpdated;
+    bookingRepository.save(booking);
+
+    return booking;
   }
 
   public void deleteBooking(String bookingId) {
-    bookingRepository.findById(bookingId)
-    .map(booking -> {
-        booking.setIsDeleted(true);
-        return bookingRepository.save(booking);
-    })
-    .orElseThrow(() -> new RuntimeException("Booking not found"));
-  }
+    Booking booking = bookingRepository.findById(bookingId)
+      .orElseThrow(() -> new RuntimeException("Booking not found"));
 
-  Booking createBooking(Booking booking) {
-    return bookingRepository.save(booking);
+    booking.setIsDeleted(true);
+
+    bookingRepository.save(booking);
   }
 }

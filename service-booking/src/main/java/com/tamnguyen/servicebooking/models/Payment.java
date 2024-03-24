@@ -2,6 +2,7 @@ package com.tamnguyen.servicebooking.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.tamnguyen.servicebooking.enums.PaymentStatus;
 
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Document(collection = "payments")
 public class Payment {
   @Id
   private String id;

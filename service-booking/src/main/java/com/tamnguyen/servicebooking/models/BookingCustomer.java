@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "BookingCustomers")
+@Document(collection = "booking-customers")
 public class BookingCustomer {
 
   @Id
@@ -30,7 +30,4 @@ public class BookingCustomer {
   @Valid
   @DBRef
   private Customer customer;
-
-  @Builder.Default
-  private Boolean isDeleted = false;
 }
