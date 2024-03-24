@@ -26,6 +26,9 @@ public class Room {
   private String name;
 
   @NotNull
+  private String roomNumber;
+
+  @NotNull
   private RoomType type;
 
   @NotNull

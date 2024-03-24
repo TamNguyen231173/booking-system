@@ -29,10 +29,11 @@ public class Currency {
   private String name;
 
   @NotNull
-  private String symbol;
+  @Indexed(unique = true)
+  private String code;
 
   @NotNull
-  private BigDecimal exchangeRate;
+  private Double exchangeRate;
 
   @Builder.Default
   private Boolean isDeleted = false;

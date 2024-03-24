@@ -47,7 +47,7 @@ public class Flight {
   private LocalDateTime arrivalTime;
 
   @NotNull
-  private BigDecimal ticketPrice;
+  private Double ticketPrice;
 
   @NotNull
   private String aircraftType;
