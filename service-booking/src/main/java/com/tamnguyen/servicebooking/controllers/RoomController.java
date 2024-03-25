@@ -1,6 +1,5 @@
 package com.tamnguyen.servicebooking.controllers;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,9 +20,6 @@ import com.tamnguyen.servicebooking.models.Room;
 import com.tamnguyen.servicebooking.services.RoomService;
 
 import lombok.RequiredArgsConstructor;
-
-
-
 
 @RestController
 @RequestMapping("/api/v1/room")

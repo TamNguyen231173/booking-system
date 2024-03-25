@@ -1,6 +1,5 @@
 package com.tamnguyen.servicebooking.models;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
