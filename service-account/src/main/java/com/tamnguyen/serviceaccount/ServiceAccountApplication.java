@@ -18,44 +18,45 @@ import com.tamnguyen.serviceaccount.service.AccountService;
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @EnableDiscoveryClient
 public class ServiceAccountApplication {
-	private final PasswordEncoder passwordEncoder;
-	private final AccountService accountService;
+    private final PasswordEncoder passwordEncoder;
+    private final AccountService accountService;
 
-	@Value("${admin.username}")
-	private String adminUsername;
+    @Value("${admin.username}")
+    private String adminUsername;
 
-	@Value("${admin.email}")
-	private String adminEmail;
+    @Value("${admin.email}")
+    private String adminEmail;
 
-	@Value("${admin.password}")
-	private String adminPassword;
-	
-	public ServiceAccountApplication(PasswordEncoder passwordEncoder, AccountService accountService) {
-		this.passwordEncoder = passwordEncoder;
-		this.accountService = accountService;
-	}
+    @Value("${admin.password}")
+    private String adminPassword;
 
-	public static void main(String[] args) {
-		SpringApplication.run(ServiceAccountApplication.class, args);
-	}
+    public ServiceAccountApplication(PasswordEncoder passwordEncoder, AccountService accountService) {
+        this.passwordEncoder = passwordEncoder;
+        this.accountService = accountService;
+    }
 
-	@Bean
-	CommandLineRunner commandLineRunner() {
-	  return args -> {
-			var admin = accountService.getAccountByName(adminUsername);
-			if (admin.isEmpty()) {
-					var account = Account.builder()
-									.username(adminUsername)
-									.email(adminEmail)
-									.password(passwordEncoder.encode(adminPassword))
-									.role(ADMIN)
-									.build();
-					try {
-							accountService.createAccount(account);
-					} catch (Exception e) {
-							// System.err.println("Failed to create admin account: " + e.getMessage());
-					}
-			};
-		};
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ServiceAccountApplication.class, args);
+    }
+
+    @Bean
+    CommandLineRunner commandLineRunner() {
+        return args -> {
+            var admin = accountService.getAccountByName(adminUsername);
+            if (admin.isEmpty()) {
+                var account = Account.builder()
+                        .username(adminUsername)
+                        .email(adminEmail)
+                        .password(passwordEncoder.encode(adminPassword))
+                        .role(ADMIN)
+                        .build();
+                try {
+                    accountService.createAccount(account);
+                } catch (Exception e) {
+                    // System.err.println("Failed to create admin account: " + e.getMessage());
+                }
+            }
+            ;
+        };
+    }
 }

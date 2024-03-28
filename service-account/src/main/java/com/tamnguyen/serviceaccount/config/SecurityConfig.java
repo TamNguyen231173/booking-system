@@ -1,4 +1,3 @@
-/*~~(Index 0 out of bounds for length 0)~~>*/
 package com.tamnguyen.serviceaccount.config;
 
 import org.springframework.context.annotation.Bean;
