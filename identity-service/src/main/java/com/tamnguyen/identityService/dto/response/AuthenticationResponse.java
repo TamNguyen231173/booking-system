@@ -1,7 +1,6 @@
 package com.tamnguyen.identityService.dto.response;
 
-import java.util.Date;
-
+import com.tamnguyen.identityService.service.AuthenticationService;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AuthenticationResponse {
-    String token;
-    Date expiryTime;
+    UserResponse user;
+    TokenInfo accessToken;
+    TokenInfo refreshToken;
 }
