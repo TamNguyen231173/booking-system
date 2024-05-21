@@ -11,13 +11,22 @@ import com.tamnguyen.identityService.exception.ErrorCode;
 import com.tamnguyen.identityService.mapper.UserMapper;
 import com.tamnguyen.identityService.repository.RoleRepository;
 import com.tamnguyen.identityService.repository.UserRepository;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 public class UserService {
     UserRepository userRepository;
     RoleRepository roleRepository;
