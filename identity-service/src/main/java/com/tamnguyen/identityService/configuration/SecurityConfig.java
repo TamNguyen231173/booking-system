@@ -20,7 +20,7 @@ public class SecurityConfig {
 
     private static final String[] PUBLIC_ENDPOINTS = {
         "/users",
-        "/auth/token",
+        "/auth/login",
         "/auth/introspect",
         "/auth/logout",
         "/auth/refresh"
@@ -38,8 +38,7 @@ public class SecurityConfig {
             request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS)
                     .permitAll()
                     .anyRequest()
-                    .authenticated()
-        );
+                    .authenticated());
 
         httpSecurity.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.decoder(customJwtDecoder)
                 .jwtAuthenticationConverter( jwtAuthenticationConverter())
