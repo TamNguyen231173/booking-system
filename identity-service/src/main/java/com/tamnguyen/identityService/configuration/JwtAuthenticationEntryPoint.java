@@ -2,8 +2,6 @@ package com.tamnguyen.identityService.configuration;
 
 import java.io.IOException;
 
-import com.tamnguyen.identityService.dto.response.ApiResponse;
-import com.tamnguyen.identityService.exception.ErrorCode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,6 +11,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tamnguyen.identityService.dto.response.ApiResponse;
+import com.tamnguyen.identityService.exception.ErrorCode;
 
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override

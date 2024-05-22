@@ -1,11 +1,13 @@
 package com.tamnguyen.identityService.service;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 
-import com.tamnguyen.identityService.dto.request.UserCreationRequest;
-import com.tamnguyen.identityService.dto.response.UserResponse;
-import com.tamnguyen.identityService.entity.User;
-import com.tamnguyen.identityService.exception.AppException;
-import com.tamnguyen.identityService.repository.UserRepository;
+import java.time.LocalDate;
+import java.util.Optional;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,13 +17,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 
-import java.time.LocalDate;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import com.tamnguyen.identityService.dto.request.UserCreationRequest;
+import com.tamnguyen.identityService.dto.response.UserResponse;
+import com.tamnguyen.identityService.entity.User;
+import com.tamnguyen.identityService.exception.AppException;
+import com.tamnguyen.identityService.repository.UserRepository;
 
 @SpringBootTest
 @TestPropertySource("/test.properties")

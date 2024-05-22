@@ -1,5 +1,13 @@
 package com.tamnguyen.identityService.service;
 
+import java.util.HashSet;
+import java.util.List;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.tamnguyen.identityService.constant.PredefinedRole;
 import com.tamnguyen.identityService.dto.request.UserCreationRequest;
 import com.tamnguyen.identityService.dto.request.UserUpdateRequest;
@@ -11,17 +19,11 @@ import com.tamnguyen.identityService.exception.ErrorCode;
 import com.tamnguyen.identityService.mapper.UserMapper;
 import com.tamnguyen.identityService.repository.RoleRepository;
 import com.tamnguyen.identityService.repository.UserRepository;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -42,10 +44,10 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         HashSet<Role> roles = new HashSet<>();
-//        Optional<Role> role = roleRepository.findById(PredefinedRole.USER_ROLE);
-//        if (role.isPresent()) {
-//            roles.add(role.get());
-//        }
+        //        Optional<Role> role = roleRepository.findById(PredefinedRole.USER_ROLE);
+        //        if (role.isPresent()) {
+        //            roles.add(role.get());
+        //        }
         roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
 
         user.setRoles(roles);
@@ -57,16 +59,14 @@ public class UserService {
         var context = SecurityContextHolder.getContext();
         String name = context.getAuthentication().getName();
 
-        User user = userRepository.findByUsername(name)
-                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        User user = userRepository.findByUsername(name).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         return userMapper.toUserResponse(user);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     public UserResponse updateUser(String userId, UserUpdateRequest request) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         userMapper.updateUser(user, request);
 
@@ -87,21 +87,20 @@ public class UserService {
 
     @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponse> getUsers() {
-//        List<User> users = userRepository.findAll();
-//
-//        List<UserResponse> userResponses = new ArrayList<>();
-//
-//        for (User user : users) {
-//            UserResponse userResponse = userMapper.toUserResponse(user);
-//            userResponses.add(userResponse);
-//        }
+        //        List<User> users = userRepository.findAll();
+        //
+        //        List<UserResponse> userResponses = new ArrayList<>();
+        //
+        //        for (User user : users) {
+        //            UserResponse userResponse = userMapper.toUserResponse(user);
+        //            userResponses.add(userResponse);
+        //        }
         return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     public UserResponse getUser(String id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         return userMapper.toUserResponse(user);
     }

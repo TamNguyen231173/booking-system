@@ -1,17 +1,19 @@
 package com.tamnguyen.identityService.service;
 
+import java.util.HashSet;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.tamnguyen.identityService.dto.request.RoleRequest;
 import com.tamnguyen.identityService.dto.response.RoleResponse;
 import com.tamnguyen.identityService.mapper.RoleMapper;
 import com.tamnguyen.identityService.repository.PermissionRepository;
 import com.tamnguyen.identityService.repository.RoleRepository;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

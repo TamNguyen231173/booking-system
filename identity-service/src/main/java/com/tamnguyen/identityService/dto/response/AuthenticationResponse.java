@@ -1,6 +1,5 @@
 package com.tamnguyen.identityService.dto.response;
 
-import com.tamnguyen.identityService.service.AuthenticationService;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

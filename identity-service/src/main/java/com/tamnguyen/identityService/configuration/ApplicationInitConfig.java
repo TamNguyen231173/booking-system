@@ -1,22 +1,24 @@
 package com.tamnguyen.identityService.configuration;
 
-import com.tamnguyen.identityService.constant.PredefinedRole;
-import com.tamnguyen.identityService.entity.Role;
-import com.tamnguyen.identityService.entity.User;
-import com.tamnguyen.identityService.repository.RoleRepository;
-import com.tamnguyen.identityService.repository.UserRepository;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
-import lombok.extern.slf4j.Slf4j;
+import java.util.HashSet;
+
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.HashSet;
+import com.tamnguyen.identityService.constant.PredefinedRole;
+import com.tamnguyen.identityService.entity.Role;
+import com.tamnguyen.identityService.entity.User;
+import com.tamnguyen.identityService.repository.RoleRepository;
+import com.tamnguyen.identityService.repository.UserRepository;
+
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
+import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @RequiredArgsConstructor
@@ -41,27 +43,27 @@ public class ApplicationInitConfig {
 
         return args -> {
             if (userRepository.findByUsername(ADMIN_USER_NAME).isEmpty()) {
-              roleRepository.save(Role.builder()
+                roleRepository.save(Role.builder()
                         .name(PredefinedRole.USER_ROLE)
                         .description("User role")
                         .build());
 
-              Role adminRole = roleRepository.save(Role.builder()
+                Role adminRole = roleRepository.save(Role.builder()
                         .name(PredefinedRole.ADMIN_ROLE)
                         .description("Admin role")
                         .build());
 
-              var roles = new HashSet<Role>();
-              roles.add(adminRole);
+                var roles = new HashSet<Role>();
+                roles.add(adminRole);
 
-              User user = User.builder()
+                User user = User.builder()
                         .username(ADMIN_USER_NAME)
                         .password(passwordEncoder.encode(ADMIN_PASSWORD))
                         .roles(roles)
                         .build();
 
-              userRepository.save(user);
-              log.warn("admin user has been created with default password: admin, please change it");
+                userRepository.save(user);
+                log.warn("admin user has been created with default password: admin, please change it");
             }
             log.info("Application initialized successfully.....");
         };
