@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.tamnguyen.identityService.dto.request.RoleRequest;
+import com.tamnguyen.identityService.dto.request.user.RoleRequest;
 import com.tamnguyen.identityService.dto.response.RoleResponse;
 import com.tamnguyen.identityService.mapper.RoleMapper;
 import com.tamnguyen.identityService.repository.PermissionRepository;

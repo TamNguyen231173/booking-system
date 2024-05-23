@@ -20,10 +20,9 @@ public class UserProfileService {
 
    public UserProfileResponse creationProfile(ProfileCreationRequest request) {
        UserProfile userProfile = userProfileMapper.toUserProfile(request);
-
+        log.info("Creating profile for user: {}", request.getUserId());
+       log.info("Creating profile for user: {}", userProfile.getUserId());
        userProfile = userProfileRepository.save(userProfile);
-
-       System.out.println("User profile created: " + userProfile.getId());
 
        return userProfileMapper.toUserProfileResponse(userProfile);
     }

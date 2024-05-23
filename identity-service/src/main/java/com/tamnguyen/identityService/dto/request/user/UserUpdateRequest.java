@@ -1,8 +1,7 @@
-package com.tamnguyen.identityService.dto.request;
+package com.tamnguyen.identityService.dto.request.user;
 
 import java.time.LocalDate;
-
-import jakarta.validation.constraints.Size;
+import java.util.List;
 
 import com.tamnguyen.identityService.validator.DobConstraint;
 
@@ -10,20 +9,17 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserCreationRequest {
-    @Size(min = 4, message = "USERNAME_INVALID")
-    String username;
-
-    @Size(min = 6, message = "INVALID_PASSWORD")
+public class UserUpdateRequest {
     String password;
-
     String firstName;
     String lastName;
 
     @DobConstraint(min = 12, message = "INVALID_DOB")
     LocalDate dob;
+
+    List<String> roles;
 }

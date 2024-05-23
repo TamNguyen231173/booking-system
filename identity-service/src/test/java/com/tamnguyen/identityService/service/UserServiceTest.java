@@ -17,7 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 
-import com.tamnguyen.identityService.dto.request.UserCreationRequest;
+import com.tamnguyen.identityService.dto.request.user.UserCreationRequest;
 import com.tamnguyen.identityService.dto.response.UserResponse;
 import com.tamnguyen.identityService.entity.User;
 import com.tamnguyen.identityService.exception.AppException;

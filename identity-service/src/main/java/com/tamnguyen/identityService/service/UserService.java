@@ -1,29 +1,29 @@
 package com.tamnguyen.identityService.service;
 
-import java.util.HashSet;
-import java.util.List;
-
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import com.tamnguyen.identityService.constant.PredefinedRole;
-import com.tamnguyen.identityService.dto.request.UserCreationRequest;
-import com.tamnguyen.identityService.dto.request.UserUpdateRequest;
+import com.tamnguyen.identityService.dto.request.user.UserCreationRequest;
+import com.tamnguyen.identityService.dto.request.user.UserUpdateRequest;
 import com.tamnguyen.identityService.dto.response.UserResponse;
 import com.tamnguyen.identityService.entity.Role;
 import com.tamnguyen.identityService.entity.User;
 import com.tamnguyen.identityService.exception.AppException;
 import com.tamnguyen.identityService.exception.ErrorCode;
+import com.tamnguyen.identityService.mapper.ProfileMapper;
 import com.tamnguyen.identityService.mapper.UserMapper;
 import com.tamnguyen.identityService.repository.RoleRepository;
 import com.tamnguyen.identityService.repository.UserRepository;
-
+import com.tamnguyen.identityService.repository.httpclient.ProfileClient;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +34,8 @@ public class UserService {
     RoleRepository roleRepository;
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
+    ProfileClient profileClient;
+    ProfileMapper profileMapper;
 
     public UserResponse createUser(UserCreationRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
@@ -51,8 +53,13 @@ public class UserService {
         roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
 
         user.setRoles(roles);
+        user = userRepository.save(user);
 
-        return userMapper.toUserResponse(userRepository.save(user));
+        var profileRequest = profileMapper.toProfileCreationRequest(request);
+        profileRequest.setUserId(user.getId());
+        profileClient.createProfile(profileRequest);
+
+        return userMapper.toUserResponse(user);
     }
 
     public UserResponse getMyInfo() {

@@ -3,15 +3,18 @@ package com.tamnguyen.identityService.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Set;
+import java.time.LocalDate;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserResponse {
+public class UserProfileResponse {
     String id;
-    String username;
-    Set<RoleResponse> roles;
+    String userId;
+    String firstName;
+    String lastName;
+    LocalDate dob;
+    String city;
 }

@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nimbusds.jose.JOSEException;
-import com.tamnguyen.identityService.dto.request.AuthenticationRequest;
-import com.tamnguyen.identityService.dto.request.IntrospectRequest;
-import com.tamnguyen.identityService.dto.request.LogoutRequest;
-import com.tamnguyen.identityService.dto.request.RefreshRequest;
+import com.tamnguyen.identityService.dto.request.auth.AuthenticationRequest;
+import com.tamnguyen.identityService.dto.request.auth.IntrospectRequest;
+import com.tamnguyen.identityService.dto.request.auth.LogoutRequest;
+import com.tamnguyen.identityService.dto.request.auth.RefreshRequest;
 import com.tamnguyen.identityService.dto.response.ApiResponse;
 import com.tamnguyen.identityService.dto.response.AuthenticationResponse;
 import com.tamnguyen.identityService.dto.response.IntrospectResponse;

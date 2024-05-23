@@ -6,15 +6,18 @@ import com.tamnguyen.profile.service.UserProfileService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserProfileController {
+    private static final Logger log = LoggerFactory.getLogger(UserProfileController.class);
     UserProfileService userProfileService;
 
-    @PostMapping("/")
+    @PostMapping("/create")
     UserProfileResponse createUserProfile(@RequestBody ProfileCreationRequest request) {
         return userProfileService.creationProfile(request);
     }

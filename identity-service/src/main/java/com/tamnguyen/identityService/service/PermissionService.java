@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.tamnguyen.identityService.dto.request.PermissionRequest;
+import com.tamnguyen.identityService.dto.request.auth.PermissionRequest;
 import com.tamnguyen.identityService.dto.response.PermissionResponse;
 import com.tamnguyen.identityService.entity.Permission;
 import com.tamnguyen.identityService.mapper.PermissionMapper;

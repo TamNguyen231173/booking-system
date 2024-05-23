@@ -1,4 +1,6 @@
-package com.tamnguyen.identityService.dto.request;
+package com.tamnguyen.identityService.dto.request.user;
+
+import java.util.Set;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,7 +10,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PermissionRequest {
+public class RoleRequest {
     String name;
     String description;
+    Set<String> permissions;
 }

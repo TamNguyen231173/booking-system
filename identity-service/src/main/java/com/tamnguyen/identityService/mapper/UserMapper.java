@@ -4,8 +4,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-import com.tamnguyen.identityService.dto.request.UserCreationRequest;
-import com.tamnguyen.identityService.dto.request.UserUpdateRequest;
+import com.tamnguyen.identityService.dto.request.user.UserCreationRequest;
+import com.tamnguyen.identityService.dto.request.user.UserUpdateRequest;
 import com.tamnguyen.identityService.dto.response.UserResponse;
 import com.tamnguyen.identityService.entity.User;
 

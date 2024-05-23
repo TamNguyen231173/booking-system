@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.tamnguyen.identityService.dto.request.UserCreationRequest;
+import com.tamnguyen.identityService.dto.request.user.UserCreationRequest;
 import com.tamnguyen.identityService.dto.response.UserResponse;
 import com.tamnguyen.identityService.service.UserService;
 
