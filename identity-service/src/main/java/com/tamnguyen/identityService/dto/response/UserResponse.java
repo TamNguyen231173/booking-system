@@ -13,5 +13,6 @@ import java.util.Set;
 public class UserResponse {
     String id;
     String username;
+
     Set<RoleResponse> roles;
 }

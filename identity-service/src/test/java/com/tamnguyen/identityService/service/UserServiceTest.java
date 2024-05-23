@@ -1,13 +1,10 @@
 package com.tamnguyen.identityService.service;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDate;
-import java.util.Optional;
-
+import com.tamnguyen.identityService.dto.request.user.UserCreationRequest;
+import com.tamnguyen.identityService.dto.response.UserResponse;
+import com.tamnguyen.identityService.entity.User;
+import com.tamnguyen.identityService.exception.AppException;
+import com.tamnguyen.identityService.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,11 +14,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 
-import com.tamnguyen.identityService.dto.request.user.UserCreationRequest;
-import com.tamnguyen.identityService.dto.response.UserResponse;
-import com.tamnguyen.identityService.entity.User;
-import com.tamnguyen.identityService.exception.AppException;
-import com.tamnguyen.identityService.repository.UserRepository;
+import java.time.LocalDate;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @TestPropertySource("/test.properties")
@@ -52,17 +51,11 @@ public class UserServiceTest {
         userResponse = UserResponse.builder()
                 .id("cf0600f538b3")
                 .username("tamnguyen")
-                .firstName("Nguyen")
-                .lastName("Tam")
-                .dob(dob)
                 .build();
 
         user = User.builder()
                 .id("cf0600f538b3")
                 .username("tamnguyen")
-                .firstName("Nguyen")
-                .lastName("Tam")
-                .dob(dob)
                 .build();
     }
 

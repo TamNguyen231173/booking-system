@@ -1,7 +1,11 @@
 package com.tamnguyen.identityService.controller;
 
-import java.time.LocalDate;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.tamnguyen.identityService.dto.request.user.UserCreationRequest;
+import com.tamnguyen.identityService.dto.response.UserResponse;
+import com.tamnguyen.identityService.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -16,13 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.tamnguyen.identityService.dto.request.user.UserCreationRequest;
-import com.tamnguyen.identityService.dto.response.UserResponse;
-import com.tamnguyen.identityService.service.UserService;
-
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDate;
 
 @Slf4j
 @SpringBootTest
@@ -54,9 +52,6 @@ public class UserControllerTest {
         userResponse = UserResponse.builder()
                 .id("cf06sdf538b3")
                 .username("tamnguyen")
-                .firstName("Nguyen")
-                .lastName("Tam")
-                .dob(dob)
                 .build();
     }
 
