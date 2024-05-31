@@ -1,0 +1,21 @@
+package com.tamnguyen.identityService.configuration;
+
+import feign.RequestInterceptor;
+import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+public class AuthenticationRequestIntercepter implements RequestInterceptor {
+    @Override
+    public void apply(feign.RequestTemplate requestTemplate) {
+        ServletRequestAttributes servletRequestAttributes =
+                (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+
+        var authHeader = servletRequestAttributes.getRequest().getHeader("Authorization");
+
+        if (StringUtils.hasText(authHeader)) {
+            requestTemplate.header("Authorization", authHeader);
+        }
+
+    }
+}

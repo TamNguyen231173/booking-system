@@ -1,20 +1,19 @@
 package com.tamnguyen.identityService.controller;
 
-import java.util.List;
-
-import jakarta.validation.Valid;
-
-import org.springframework.web.bind.annotation.*;
-
 import com.tamnguyen.identityService.dto.request.user.UserCreationRequest;
 import com.tamnguyen.identityService.dto.request.user.UserUpdateRequest;
 import com.tamnguyen.identityService.dto.response.ApiResponse;
 import com.tamnguyen.identityService.dto.response.UserResponse;
 import com.tamnguyen.identityService.service.UserService;
-
-import lombok.*;
+import jakarta.validation.Valid;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/users")
@@ -23,6 +22,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserController {
     UserService userService;
+
+    @PostMapping("/registration")
+    ApiResponse<UserResponse> registerUser(@RequestBody @Valid UserCreationRequest request) {
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.createUser(request))
+                .build();
+    }
 
     @PostMapping("/create")
     ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request) {
@@ -33,6 +39,7 @@ public class UserController {
 
     @GetMapping("/me")
     ApiResponse<UserResponse> getMyInfo() {
+        Logger.getGlobal().info("Getting my info");
         return ApiResponse.<UserResponse>builder()
                 .result(userService.getMyInfo())
                 .build();

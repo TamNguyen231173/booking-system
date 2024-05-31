@@ -1,6 +1,6 @@
-package com.tamnguyen.identityService.exception;
+package com.tamnguyen.profile.exception;
 
-import com.tamnguyen.identityService.dto.response.ApiResponse;
+import com.tamnguyen.profile.dto.ApiResponse;
 import jakarta.validation.ConstraintViolation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

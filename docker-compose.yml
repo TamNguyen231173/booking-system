@@ -1,0 +1,26 @@
+version: '3'
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: identity-service
+    environment:
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_DATABASE: identity
+    ports:
+      - 3306:3306
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  neo4j:
+    image: neo4j:latest
+    container_name: profile-service
+    environment:
+      NEO4J_AUTH: neo4j/admin123
+    ports:
+      - 7687:7687
+    volumes:
+      - neo4j_data:/data
+
+volumes:
+  mariadb_data:
+  neo4j_data:
