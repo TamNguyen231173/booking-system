@@ -1,6 +1,7 @@
 package com.tamnguyen.identityService.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,6 +18,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
+
+    @Email
+    String email;
 
     String username;
     String password;

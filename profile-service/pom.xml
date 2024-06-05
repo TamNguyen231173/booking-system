@@ -120,10 +120,10 @@
 				</executions>
 				<configuration>
 					<excludes>
-						<exclude>com/devteria/userProfile/dto/**</exclude>
-						<exclude>com/devteria/userProfile/entity/**</exclude>
-						<exclude>com/devteria/userProfile/mapper/**</exclude>
-						<exclude>com/devteria/userProfile/configuration/**</exclude>
+						<exclude>com/tamnguyen/userProfile/dto/**</exclude>
+						<exclude>com/tamnguyen/userProfile/entity/**</exclude>
+						<exclude>com/tamnguyen/userProfile/mapper/**</exclude>
+						<exclude>com/tamnguyen/userProfile/configuration/**</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
