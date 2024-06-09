@@ -1,5 +1,6 @@
 package com.tamnguyen.identityService.controller;
 
+import com.tamnguyen.identityService.dto.request.auth.PasswordCreationRequest;
 import com.tamnguyen.identityService.dto.request.user.UserCreationRequest;
 import com.tamnguyen.identityService.dto.request.user.UserUpdateRequest;
 import com.tamnguyen.identityService.dto.response.ApiResponse;
@@ -34,6 +35,14 @@ public class UserController {
     ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request) {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.createUser(request))
+                .build();
+    }
+
+    @PostMapping("/create-password")
+    ApiResponse<Void> createPassword(@RequestBody @Valid PasswordCreationRequest request) {
+        userService.createPassword(request);
+        return ApiResponse.<Void>builder()
+                .message("Password has been created, you can now login")
                 .build();
     }
 

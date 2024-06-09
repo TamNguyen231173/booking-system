@@ -13,6 +13,7 @@ import java.util.Set;
 public class UserResponse {
     String id;
     String username;
+    Boolean noPassword;
 
     Set<RoleResponse> roles;
 }
