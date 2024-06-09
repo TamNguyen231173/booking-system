@@ -21,6 +21,15 @@ services:
     volumes:
       - neo4j_data:/data
 
+  mongodb:
+    image: mongo:latest
+    container_name: notification-service
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data:/data/db
+
 volumes:
   mariadb_data:
   neo4j_data:
+  mongodb_data:
