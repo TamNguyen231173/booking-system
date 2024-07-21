@@ -8,3 +8,8 @@ spring:
   data:
     mongodb:
       uri: mongodb://root:root@localhost:27017/notification-service
+  emailDefault: tamnh@gmail.com
+  nameEmail: "Tam Nguyen"
+
+brevo:
+  apiKey: 
