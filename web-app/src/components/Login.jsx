@@ -40,6 +40,10 @@ export default function Login() {
         console.log("Password:", password);
     };
 
+    const handleNavigateToRegister = () => {
+        navigate("/registration");
+    }
+
     return (
         <Box
             display="flex"
@@ -49,74 +53,74 @@ export default function Login() {
             height="100vh"
             bgcolor={"#f0f2f5"}
         >
-          <Card
-              sx={{
-                minWidth: 250,
-                maxWidth: 400,
-                boxShadow: 4,
-                borderRadius: 4,
-                padding: 4,
-              }}
-          >
-            <CardContent>
-              <Typography variant="h5" component="h1" gutterBottom>
-                Welcome to TamNguyen
-              </Typography>
-              <Box component="form" onSubmit={handleSubmit} sx={{mt: 2}}>
-                <TextField
-                    label="Username"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <TextField
-                    label="Password"
-                    type="password"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-              </Box>
-            </CardContent>
-            <CardActions>
-              <Box display="flex" flexDirection="column" width="100%" gap="25px">
-                <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    fullWidth
-                >
-                  Login
-                </Button>
-                <Button
-                    type="button"
-                    variant="contained"
-                    color="secondary"
-                    size="large"
-                    onClick={handleClick}
-                    fullWidth
-                    sx={{gap: "10px"}}
-                >
-                  <GoogleIcon/>
-                  Continue with Google
-                </Button>
-                <Divider></Divider>
-                <Button
-                    type="submit"
-                    variant="contained"
-                    color="success"
-                    size="large"
-                >
-                  Create an account
-                </Button>
-              </Box>
-            </CardActions>
-          </Card>
+            <Card
+                sx={{
+                    minWidth: 250,
+                    maxWidth: 400,
+                    boxShadow: 4,
+                    borderRadius: 4,
+                    padding: 4,
+                }}
+            >
+                <CardContent>
+                    <Typography variant="h5" component="h1" gutterBottom>
+                        Welcome to TamNguyen
+                    </Typography>
+                    <Box component="form" onSubmit={handleSubmit} sx={{mt: 2}}>
+                        <TextField
+                            label="Username"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <TextField
+                            label="Password"
+                            type="password"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </Box>
+                </CardContent>
+                <CardActions>
+                    <Box display="flex" flexDirection="column" width="100%" gap="25px">
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            size="large"
+                            fullWidth
+                        >
+                            Login
+                        </Button>
+                        <Button
+                            type="button"
+                            variant="contained"
+                            color="secondary"
+                            size="large"
+                            onClick={handleClick}
+                            fullWidth
+                            sx={{gap: "10px"}}
+                        >
+                            <GoogleIcon/>
+                            Continue with Google
+                        </Button>
+                        <Divider></Divider>
+                        <Button
+                            onClick={handleNavigateToRegister}
+                            variant="contained"
+                            color="success"
+                            size="large"
+                        >
+                            Create an account
+                        </Button>
+                    </Box>
+                </CardActions>
+            </Card>
         </Box>
     );
 }

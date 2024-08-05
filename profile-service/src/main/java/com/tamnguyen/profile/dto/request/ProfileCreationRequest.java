@@ -12,6 +12,9 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProfileCreationRequest {
     String userId;
+    String username;
+    String email;
+    String password;
     String firstName;
     String lastName;
     LocalDate dob;

@@ -10,6 +10,13 @@ spring:
       uri: mongodb://root:root@localhost:27017/notification-service
   emailDefault: tamnh@gmail.com
   nameEmail: "Tam Nguyen"
+  kafka:
+    bootstrap-servers: localhost:9094
+    consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 brevo:
-  apiKey: 
+  apiKey: "your_api_key"
