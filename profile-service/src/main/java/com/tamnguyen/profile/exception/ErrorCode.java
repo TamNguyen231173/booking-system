@@ -16,6 +16,9 @@ public enum ErrorCode {
     UNAUTHORIZED(1007, "You do not have permission", HttpStatus.FORBIDDEN),
     INVALID_DOB(1008, "Your age must be at least {min}", HttpStatus.BAD_REQUEST),
     USER_NOT_CREATED(1009, "User not created", HttpStatus.INTERNAL_SERVER_ERROR),
+    INTERNAL_SERVER_ERROR(1010, "Internal server error", HttpStatus.INTERNAL_SERVER_ERROR),
+    EMAIL_EXISTED(1011, "Email existed", HttpStatus.BAD_REQUEST),
+    USERNAME_IS_MISSING(1012, "Username is missing", HttpStatus.BAD_REQUEST),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

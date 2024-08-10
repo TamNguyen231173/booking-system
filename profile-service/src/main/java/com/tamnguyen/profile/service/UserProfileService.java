@@ -8,9 +8,11 @@ import com.tamnguyen.profile.dto.response.UserProfileResponse;
 import com.tamnguyen.profile.entity.UserProfile;
 import com.tamnguyen.profile.exception.AppException;
 import com.tamnguyen.profile.exception.ErrorCode;
+import com.tamnguyen.profile.exception.ErrorNormalizer;
 import com.tamnguyen.profile.mapper.UserProfileMapper;
 import com.tamnguyen.profile.repository.IdentityClient;
 import com.tamnguyen.profile.repository.UserProfileRepository;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
@@ -29,6 +31,7 @@ public class UserProfileService {
     UserProfileRepository userProfileRepository;
     UserProfileMapper userProfileMapper;
     private final IdentityClient identityClient;
+    ErrorNormalizer errorNormalizer;
 
     @Value("${idp.clientId}")
     @NonFinal
@@ -44,36 +47,42 @@ public class UserProfileService {
     String grantType;
 
     public UserProfileResponse creationProfile(ProfileCreationRequest request) {
-        // Create account in keyCloak
-        // Exchange client token to get access token
-        var token = identityClient.exchangeToken(TokenExchangeParam.builder()
-                .client_id(clientId)
-                .client_secret(clientSecret)
-                .grant_type(grantType)
-                .scope(scope)
-                .build());
+        try {
+            // Create account in keyCloak
+            // Exchange client token to get access token
+            var token = identityClient.exchangeToken(TokenExchangeParam.builder()
+                    .client_id(clientId)
+                    .client_secret(clientSecret)
+                    .grant_type(grantType)
+                    .scope(scope)
+                    .build());
 
-        // Create user with client token
-        var creationResponse = identityClient.createUser(
-                "Bearer " + token.getAccessToken()
-                , UserCreationParam.builder()
-                        .username(request.getUsername())
-                        .email(request.getEmail())
-                        .firstName(request.getFirstName())
-                        .lastName(request.getLastName())
-                        .enabled(true)
-                        .credentials(List.of(Credential.builder()
-                                .type("password")
-                                .value(request.getPassword())
-                                .temporary(false)
-                                .build()))
-                        .build());
-        String userId = extractUserId(creationResponse);
+            // Create user with client token
+            var creationResponse = identityClient.createUser(
+                    "Bearer " + token.getAccessToken()
+                    , UserCreationParam.builder()
+                            .username(request.getUsername())
+                            .email(request.getEmail())
+                            .firstName(request.getFirstName())
+                            .lastName(request.getLastName())
+                            .enabled(true)
+                            .credentials(List.of(Credential.builder()
+                                    .type("password")
+                                    .value(request.getPassword())
+                                    .temporary(false)
+                                    .build()))
+                            .build());
+            String userId = extractUserId(creationResponse);
 
-        UserProfile userProfile = userProfileMapper.toUserProfile(request);
-        userProfile = userProfileRepository.save(userProfile);
+            UserProfile userProfile = userProfileMapper.toUserProfile(request);
+            userProfile.setUserId(userId);
+            userProfile = userProfileRepository.save(userProfile);
 
-        return userProfileMapper.toUserProfileResponse(userProfile);
+            return userProfileMapper.toUserProfileResponse(userProfile);
+        } catch (FeignException e) {
+            log.error("Error creating profile", e);
+            throw errorNormalizer.handleKeyCloakException(e);
+        }
     }
 
     public String extractUserId(ResponseEntity<?> response) {
