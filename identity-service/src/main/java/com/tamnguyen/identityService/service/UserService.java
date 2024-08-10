@@ -1,5 +1,6 @@
 package com.tamnguyen.identityService.service;
 
+import com.tamnguyen.event.dto.NotificationEvent;
 import com.tamnguyen.identityService.constant.PredefinedRole;
 import com.tamnguyen.identityService.dto.request.auth.PasswordCreationRequest;
 import com.tamnguyen.identityService.dto.request.user.UserCreationRequest;
@@ -40,7 +41,7 @@ public class UserService {
     PasswordEncoder passwordEncoder;
     ProfileClient profileClient;
     ProfileMapper profileMapper;
-    KafkaTemplate<String, String> kafkaTemplate;
+    KafkaTemplate<String, Object> kafkaTemplate;
 
     public UserResponse createUser(UserCreationRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
@@ -67,11 +68,23 @@ public class UserService {
 
         var profileRequest = profileMapper.toProfileCreationRequest(request);
         profileRequest.setUserId(user.getId());
-        profileClient.createProfile(profileRequest);
 
-        kafkaTemplate.send("user-created", user.getId());
+        var profile = profileClient.createProfile(profileRequest);
 
-        return userMapper.toUserResponse(user);
+        NotificationEvent event = NotificationEvent.builder()
+                .channel("email")
+                .recipient(user.getEmail())
+                .subject("User Created")
+                .body("User " + user.getUsername() + " has been created")
+                .build();
+
+        // Publish message to kafka
+        kafkaTemplate.send("notification-delivery", event);
+
+        var userResponse = userMapper.toUserResponse(user);
+        userResponse.setId(profile.getResult().getId());
+
+        return userResponse;
     }
 
     public void createPassword(PasswordCreationRequest request) {
